@@ -4,9 +4,6 @@ defmodule GoogleMaps do
   @moduledoc """
   A module to make requests to the Google Maps API.
 
-  The Google Maps API server address used to send request is stored in the
-  `:google_maps_api_server` key in the `mix.exs` file of the application.
-
   For more information about the endpoints and parameters use for the Google Maps API, visit the
   [Google Maps API documentation](https://developers.google.com/maps/documentation)
   """
@@ -23,11 +20,11 @@ defmodule GoogleMaps do
   ## Examples
 
       # Returns a valid Place
-      params = [key: "***", query: "marbella", language: "es", region: "es", type: "restaurant"]
-      GoogleMaps.call("/maps/api/place/textsearch/json", params)
+      params = [key: "???", query: "marbella", language: "es", region: "es", type: "restaurant"]
+      GoogleMaps.call("https://maps.googleapis.com/maps/api/place/textsearch/json", params)
 
       # Returns an error if the `place_id` is not valid
-      GoogleMaps.fetch("/invalid", key: "***", place_id: "xxx")
+      GoogleMaps.call("/invalid", key: "***", place_id: "xxx")
       {:error, "Error description"}
 
   """
@@ -77,9 +74,8 @@ defmodule GoogleMaps do
 
   defp build_url(endpoint, params) do
     try do
-      Application.fetch_env!(:google_maps, :google_maps_api_server)
+      endpoint
       |> URI.new!()
-      |> URI.merge(endpoint)
       |> URI.append_query(URI.encode_query(params))
       |> URI.to_string()
     rescue

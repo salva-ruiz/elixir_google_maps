@@ -2,9 +2,6 @@
 
 A library to make requests to the Google Maps API.
 
-Check the Google Maps API server address used to send request stored in the
-`:google_maps_api_server` key in the `mix.exs` file of the application.
-
 For more information about the endpoints and parameters used in the Google Maps
 API, visit the [Google Maps API documentation](https://developers.google.com/maps/documentation).
 
@@ -16,7 +13,7 @@ dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:google_maps, git: "https://github.com/salva-ruiz/elixir_google_maps.git", tag: "1.0"}
+    {:google_maps, git: "https://github.com/salva-ruiz/elixir_google_maps.git"}
   ]
 end
 ```
@@ -31,8 +28,8 @@ Call the `GoogleMaps.call/2` function with the JSON endpoint and the query
 params to returns a map with the Google Maps response:
 
 ```elixir
-GoogleMaps.call("/maps/api/place/textsearch/json", [
-  key: "***",
+GoogleMaps.call("https://maps.googleapis.com/maps/api/place/textsearch/json", [
+  key: "???",
   query: "marbella",
   language: "es",
   region: "es",
@@ -43,6 +40,6 @@ GoogleMaps.call("/maps/api/place/textsearch/json", [
 Returns an error if the endpoint or some param is not valid:
 
 ```elixir
-GoogleMaps.fetch("/invalid", key: "***", place_id: "xxx")
+GoogleMaps.call("/invalid", key: "???", place_id: "xxx")
 {:error, "Error description"}
 ```
